@@ -1,0 +1,206 @@
+.home-page {
+  min-height: 100vh;
+  background-color: #fff;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Hero Section */
+.hero {
+  background: linear-gradient(135deg, #000 0%, #333 100%);
+  color: #fff;
+  padding: 100px 20px;
+  text-align: center;
+}
+
+.hero-content h1 {
+  font-size: 48px;
+  margin-bottom: 16px;
+  font-weight: 700;
+}
+
+.hero-content p {
+  font-size: 20px;
+  opacity: 0.9;
+}
+
+/* Quick Access Section */
+.quick-access {
+  padding: 80px 20px;
+  background-color: #f9f9f9;
+}
+
+.quick-access h2 {
+  font-size: 36px;
+  text-align: center;
+  margin-bottom: 50px;
+  color: #000;
+}
+
+.access-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.access-card {
+  background-color: #fff;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 40px 30px;
+  text-align: center;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.access-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #000;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+  z-index: -1;
+}
+
+.access-card:hover::before {
+  transform: scaleX(1);
+}
+
+.card-icon {
+  font-size: 48px;
+  margin-bottom: 20px;
+}
+
+.access-card h3 {
+  font-size: 20px;
+  margin-bottom: 12px;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.access-card p {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 20px;
+  transition: color 0.3s ease;
+}
+
+.arrow {
+  display: inline-block;
+  font-size: 24px;
+  transition: transform 0.3s ease;
+}
+
+.access-card:hover h3,
+.access-card:hover p {
+  color: #fff;
+}
+
+.access-card:hover .arrow {
+  transform: translateX(4px);
+  color: #fff;
+}
+
+/* Features Section */
+.features {
+  padding: 80px 20px;
+  background-color: #fff;
+}
+
+.features h2 {
+  font-size: 36px;
+  text-align: center;
+  margin-bottom: 50px;
+  color: #000;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.feature {
+  text-align: center;
+}
+
+.feature-icon {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  background-color: #000;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.feature h3 {
+  font-size: 18px;
+  margin-bottom: 12px;
+  font-weight: 600;
+}
+
+.feature p {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.6;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero-content h1 {
+    font-size: 32px;
+  }
+
+  .hero-content p {
+    font-size: 16px;
+  }
+
+  .quick-access h2,
+  .features h2 {
+    font-size: 28px;
+    margin-bottom: 30px;
+  }
+
+  .hero {
+    padding: 60px 20px;
+  }
+
+  .quick-access,
+  .features {
+    padding: 50px 20px;
+  }
+
+  .access-grid,
+  .features-grid {
+    gap: 20px;
+  }
+
+  .access-card {
+    padding: 30px 20px;
+  }
+
+  .card-icon {
+    font-size: 36px;
+  }
+}

@@ -1,0 +1,135 @@
+.listing-page {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+.listing-header {
+  background-color: #fff;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 30px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.listing-header h1 {
+  margin: 0 0 8px 0;
+  font-size: 32px;
+  color: #000;
+}
+
+.listing-header p {
+  margin: 0;
+  font-size: 14px;
+  color: #999;
+}
+
+.listing-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 20px;
+}
+
+.listing-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.listing-main {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.view-switcher {
+  display: flex;
+  gap: 10px;
+}
+
+.view-btn {
+  padding: 8px 16px;
+  border: 1px solid #e0e0e0;
+  background-color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.view-btn:hover {
+  border-color: #000;
+}
+
+.view-btn.active {
+  background-color: #000;
+  color: #fff;
+  border-color: #000;
+}
+
+.properties-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.properties-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+
+.no-results {
+  background-color: #fff;
+  padding: 60px 20px;
+  border-radius: 8px;
+  text-align: center;
+  color: #999;
+}
+
+.no-results p:first-child {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.no-results p:last-child {
+  font-size: 14px;
+  margin: 0;
+}
+
+@media (max-width: 1024px) {
+  .listing-container {
+    grid-template-columns: 1fr;
+  }
+
+  .properties-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .listing-page {
+    padding: 0;
+  }
+
+  .listing-header {
+    padding: 20px;
+  }
+
+  .listing-header h1 {
+    font-size: 24px;
+  }
+
+  .listing-container {
+    padding: 15px;
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .properties-grid {
+    grid-template-columns: 1fr;
+  }
+}
