@@ -1,0 +1,157 @@
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 1000;
+}
+
+.modal-card {
+  width: min(1100px, 100%);
+  max-height: 90vh;
+  overflow: auto;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 28px 32px 0;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 28px;
+  color: #111;
+}
+
+.modal-purpose {
+  margin: 0 0 8px;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 12px;
+}
+
+.modal-location {
+  margin: 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.modal-close {
+  background: transparent;
+  border: none;
+  font-size: 32px;
+  line-height: 1;
+  cursor: pointer;
+  color: #333;
+}
+
+.modal-body {
+  display: grid;
+  gap: 24px;
+  padding: 20px 32px 32px;
+}
+
+.modal-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.modal-gallery img {
+  width: 100%;
+  border-radius: 16px;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.modal-details {
+  display: grid;
+  gap: 24px;
+}
+
+.modal-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 16px;
+}
+
+.modal-summary div {
+  background: #f8f8f8;
+  padding: 18px;
+  border-radius: 14px;
+}
+
+.modal-summary strong {
+  display: block;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+.modal-description,
+.modal-amenities,
+.modal-extra {
+  background: #f8f8f8;
+  padding: 20px;
+  border-radius: 14px;
+}
+
+.modal-description h3,
+.modal-amenities h3 {
+  margin: 0 0 12px;
+  font-size: 18px;
+}
+
+.modal-amenities .amenities-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.amenity-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 999px;
+  font-size: 13px;
+  color: #444;
+}
+
+.modal-extra {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 16px;
+}
+
+.modal-extra strong {
+  display: block;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+@media (max-width: 768px) {
+  .modal-card {
+    max-height: 95vh;
+  }
+
+  .modal-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .modal-body {
+    padding: 16px;
+  }
+}

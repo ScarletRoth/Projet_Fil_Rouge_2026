@@ -84,6 +84,33 @@
   background-color: #333;
 }
 
+.load-more {
+  text-align: center;
+  padding: 16px 0;
+  background: rgba(255, 255, 255, 0.9);
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.load-more .btn {
+  padding: 10px 18px;
+  border: 1px solid #000;
+  background-color: #000;
+  color: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+
+.load-more .btn:hover:not(:disabled) {
+  background-color: #333;
+}
+
+.load-more .btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
 @media (max-width: 768px) {
   .map-container {
     grid-template-columns: 1fr;

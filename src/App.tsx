@@ -2,20 +2,27 @@ import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
 import Header from './components/Header'
 import ListingPage from './pages/ListingPage'
 import MapPage from './pages/MapPage'
+import LoginPage from './pages/LoginPage'
+import SignupPage from './pages/SignupPage'
+import { AuthProvider } from './contexts/AuthContext'
 import './App.css'
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <Header />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/rent" element={<ListingPage purpose="rent" />} />
-        <Route path="/sale" element={<ListingPage purpose="sale" />} />
-        <Route path="/map-rent" element={<MapPage purpose="rent" />} />
-        <Route path="/map-sale" element={<MapPage purpose="sale" />} />
-      </Routes>
-    </BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
+        <Header />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/rent" element={<ListingPage purpose="rent" />} />
+          <Route path="/sale" element={<ListingPage purpose="sale" />} />
+          <Route path="/map-rent" element={<MapPage purpose="rent" />} />
+          <Route path="/map-sale" element={<MapPage purpose="sale" />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignupPage />} />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   )
 }
 
