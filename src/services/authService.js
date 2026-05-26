@@ -1,3 +1,9 @@
+const DEFAULT_ADMIN = {
+    email: 'admin@ymmo.fr',
+    password: 'Admin1234',
+    name: 'Administrateur',
+    role: 'admin'
+};
 const USERS_STORAGE_KEY = 'ymmo_users';
 const CURRENT_USER_STORAGE_KEY = 'ymmo_current_user';
 function parseJson(value, defaultValue) {
@@ -11,7 +17,14 @@ function parseJson(value, defaultValue) {
     }
 }
 export function getStoredUsers() {
-    return parseJson(window.localStorage.getItem(USERS_STORAGE_KEY), []);
+    const users = parseJson(window.localStorage.getItem(USERS_STORAGE_KEY), []);
+    const hasAdmin = users.some((user) => user.email.toLowerCase() === DEFAULT_ADMIN.email);
+    if (!hasAdmin) {
+        const updated = [...users, DEFAULT_ADMIN];
+        saveStoredUsers(updated);
+        return updated;
+    }
+    return users.map((user) => ({ ...user, role: user.role ?? 'user' }));
 }
 export function saveStoredUsers(users) {
     window.localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(users));
@@ -41,10 +54,11 @@ export function registerUser(email, name, password) {
         email: normalizedEmail,
         name: name.trim(),
         password,
+        role: 'user',
     };
     users.push(newUser);
     saveStoredUsers(users);
-    const authUser = { email: newUser.email, name: newUser.name };
+    const authUser = { email: newUser.email, name: newUser.name, role: newUser.role };
     saveCurrentUser(authUser);
     return {
         success: true,
@@ -59,7 +73,7 @@ export function loginUser(email, password) {
     if (!user) {
         return { success: false, message: 'E-mail ou mot de passe invalide.' };
     }
-    const authUser = { email: user.email, name: user.name };
+    const authUser = { email: user.email, name: user.name, role: user.role ?? 'user' };
     saveCurrentUser(authUser);
     return {
         success: true,

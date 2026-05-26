@@ -7,11 +7,19 @@ function stableHash(str) {
     return hash;
 }
 const PROPERTY_TYPES = ['apartment', 'house', 'studio', 'land'];
+function getPropertyImage(type, seed) {
+    const query = {
+        apartment: 'appartement',
+        house: 'maison',
+        studio: 'studio',
+        land: 'terrain'
+    }[type];
+    return `https://picsum.photos/seed/${query}-${seed}/600/400`;
+}
 export function banFeatureToProperty(feature, purpose = 'rent') {
     const [lng, lat] = feature.geometry.coordinates;
     const seed = stableHash(feature.id);
     const type = PROPERTY_TYPES[seed % PROPERTY_TYPES.length];
-    // Des valeurs cohérentes selon le type pour donner plus de diversité
     const typeDefaults = {
         apartment: { price: purpose === 'rent' ? 1200 : 250000, rooms: 2, bathrooms: 1, surface: 50 },
         house: { price: purpose === 'rent' ? 2000 : 450000, rooms: 4, bathrooms: 2, surface: 160 },
@@ -21,8 +29,8 @@ export function banFeatureToProperty(feature, purpose = 'rent') {
     const { price, rooms, bathrooms, surface } = typeDefaults[type];
     return {
         id: feature.id,
-        title: feature.properties.label,
-        description: `Adresse : ${feature.properties.label}`,
+        title: `${feature.properties.label}`,
+        description: `Adresse : ${feature.properties.label}`,
         type,
         price,
         purpose,
@@ -37,7 +45,7 @@ export function banFeatureToProperty(feature, purpose = 'rent') {
             lng
         },
         amenities: [],
-        images: [],
+        images: [getPropertyImage(type, seed)],
         agencyId: 'ban',
         createdAt: new Date().toISOString(),
         rating: 4,

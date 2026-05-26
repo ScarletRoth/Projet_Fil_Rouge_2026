@@ -13,7 +13,7 @@
   width: min(1100px, 100%);
   max-height: 90vh;
   overflow: auto;
-  background: #fff;
+  background: var(--bg-primary);
   border-radius: 20px;
   box-shadow: 0 30px 80px rgba(0, 0, 0, 0.2);
 }
@@ -29,7 +29,7 @@
 .modal-header h2 {
   margin: 0;
   font-size: 28px;
-  color: #111;
+  color: var(--text-primary);
 }
 
 .modal-purpose {
@@ -42,7 +42,7 @@
 
 .modal-location {
   margin: 0;
-  color: #666;
+  color: var(--text-secondary);
   font-size: 14px;
 }
 
@@ -52,7 +52,7 @@
   font-size: 32px;
   line-height: 1;
   cursor: pointer;
-  color: #333;
+  color: var(--text-secondary);
 }
 
 .modal-body {
@@ -86,7 +86,7 @@
 }
 
 .modal-summary div {
-  background: #f8f8f8;
+  background: var(--bg-secondary);
   padding: 18px;
   border-radius: 14px;
 }
@@ -94,13 +94,13 @@
 .modal-summary strong {
   display: block;
   margin-bottom: 8px;
-  color: #333;
+  color: var(--text-primary);
 }
 
 .modal-description,
 .modal-amenities,
 .modal-extra {
-  background: #f8f8f8;
+  background: var(--bg-secondary);
   padding: 20px;
   border-radius: 14px;
 }
@@ -122,11 +122,11 @@
   align-items: center;
   justify-content: center;
   padding: 8px 12px;
-  background: #fff;
-  border: 1px solid #ddd;
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
   border-radius: 999px;
   font-size: 13px;
-  color: #444;
+  color: var(--text-primary);
 }
 
 .modal-extra {
@@ -138,7 +138,7 @@
 .modal-extra strong {
   display: block;
   margin-bottom: 8px;
-  color: #333;
+  color: var(--text-primary);
 }
 
 @media (max-width: 768px) {

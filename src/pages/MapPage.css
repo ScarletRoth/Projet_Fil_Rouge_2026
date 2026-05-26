@@ -5,8 +5,8 @@
 }
 
 .map-header {
-  background-color: #fff;
-  border-bottom: 1px solid #e0e0e0;
+  background-color: var(--bg-primary);
+  border-bottom: 1px solid var(--border-color);
   padding: 20px;
   max-width: 1200px;
   margin: 0 auto;
@@ -16,13 +16,36 @@
 .map-header h1 {
   margin: 0 0 8px 0;
   font-size: 28px;
-  color: #000;
+  color: var(--text-primary);
 }
 
 .map-header p {
   margin: 0;
   font-size: 14px;
-  color: #999;
+  color: var(--text-secondary);
+}
+
+.map-purpose-tabs {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.tab-btn {
+  padding: 10px 16px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tab-btn.active,
+.tab-btn:hover {
+  border-color: var(--color-primary);
+  background: var(--color-primary);
+  color: #fff;
 }
 
 .map-container {
@@ -70,18 +93,18 @@
   width: 100%;
   padding: 8px;
   margin-top: 10px;
-  background-color: #000;
-  color: #fff;
-  border: none;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  border: 1px solid var(--border-color);
   border-radius: 4px;
   cursor: pointer;
   font-size: 12px;
   font-weight: 600;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .btn-view:hover {
-  background-color: #333;
+  background-color: var(--bg-secondary);
 }
 
 .load-more {

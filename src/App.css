@@ -1,6 +1,6 @@
 .home-page {
   min-height: 100vh;
-  background-color: #fff;
+  background-color: var(--bg-primary);
 }
 
 .container {
@@ -11,7 +11,7 @@
 
 /* Hero Section */
 .hero {
-  background: linear-gradient(135deg, #000 0%, #333 100%);
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
   color: #fff;
   padding: 100px 20px;
   text-align: center;
@@ -20,25 +20,27 @@
 .hero-content h1 {
   font-size: 48px;
   margin-bottom: 16px;
-  font-weight: 700;
+  font-weight: 800;
 }
 
 .hero-content p {
   font-size: 20px;
   opacity: 0.9;
+  font-weight: 600;
 }
 
 /* Quick Access Section */
 .quick-access {
   padding: 80px 20px;
-  background-color: #f9f9f9;
+  background-color: var(--bg-secondary);
 }
 
 .quick-access h2 {
   font-size: 36px;
   text-align: center;
   margin-bottom: 50px;
-  color: #000;
+  color: var(--text-primary);
+  font-weight: 800;
 }
 
 .access-grid {
@@ -50,8 +52,8 @@
 }
 
 .access-card {
-  background-color: #fff;
-  border: 2px solid #e0e0e0;
+  background-color: var(--bg-primary);
+  border: 2px solid var(--border-color);
   border-radius: 12px;
   padding: 40px 30px;
   text-align: center;
@@ -59,6 +61,7 @@
   cursor: pointer;
   position: relative;
   overflow: hidden;
+  box-shadow: var(--shadow);
 }
 
 .access-card::before {
@@ -68,7 +71,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #000;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
   transform: scaleX(0);
   transform-origin: left;
   transition: transform 0.3s ease;
@@ -79,6 +82,11 @@
   transform: scaleX(1);
 }
 
+.access-card:hover {
+  border-color: var(--color-primary);
+  box-shadow: var(--shadow-lg);
+}
+
 .card-icon {
   font-size: 48px;
   margin-bottom: 20px;
@@ -87,13 +95,14 @@
 .access-card h3 {
   font-size: 20px;
   margin-bottom: 12px;
-  font-weight: 600;
+  font-weight: 700;
   transition: color 0.3s ease;
+  color: var(--text-primary);
 }
 
 .access-card p {
   font-size: 14px;
-  color: #666;
+  color: var(--text-secondary);
   margin-bottom: 20px;
   transition: color 0.3s ease;
 }
@@ -102,6 +111,7 @@
   display: inline-block;
   font-size: 24px;
   transition: transform 0.3s ease;
+  color: var(--color-primary);
 }
 
 .access-card:hover h3,
@@ -117,14 +127,15 @@
 /* Features Section */
 .features {
   padding: 80px 20px;
-  background-color: #fff;
+  background-color: var(--bg-primary);
 }
 
 .features h2 {
   font-size: 36px;
   text-align: center;
   margin-bottom: 50px;
-  color: #000;
+  color: var(--text-primary);
+  font-weight: 800;
 }
 
 .features-grid {
@@ -140,29 +151,30 @@
 }
 
 .feature-icon {
-  display: inline-block;
+  display: inline-flex;
   width: 50px;
   height: 50px;
-  background-color: #000;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
   color: #fff;
   border-radius: 50%;
-  display: flex;
   align-items: center;
   justify-content: center;
   font-size: 24px;
   margin-bottom: 20px;
   font-weight: bold;
+  box-shadow: var(--shadow);
 }
 
 .feature h3 {
   font-size: 18px;
   margin-bottom: 12px;
-  font-weight: 600;
+  font-weight: 700;
+  color: var(--text-primary);
 }
 
 .feature p {
   font-size: 14px;
-  color: #666;
+  color: var(--text-secondary);
   line-height: 1.6;
 }
 
@@ -211,26 +223,29 @@
   align-items: center;
   justify-content: center;
   padding: 40px 20px;
-  background-color: #f5f7fa;
+  background-color: var(--bg-secondary);
 }
 
 .auth-card {
   width: 100%;
   max-width: 420px;
-  background: #ffffff;
+  background: var(--bg-primary);
   border-radius: 18px;
   padding: 36px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border-color);
 }
 
 .auth-card h1 {
   margin-bottom: 12px;
   font-size: 30px;
+  color: var(--text-primary);
+  font-weight: 800;
 }
 
 .auth-card p {
   margin-bottom: 24px;
-  color: #555;
+  color: var(--text-secondary);
   line-height: 1.5;
 }
 
@@ -243,50 +258,63 @@
   display: grid;
   gap: 8px;
   font-size: 14px;
-  color: #333;
+  color: var(--text-primary);
+  font-weight: 600;
 }
 
 .auth-form input {
   width: 100%;
   padding: 12px 14px;
-  border: 1px solid #d4d4d4;
+  border: 1px solid var(--border-color);
   border-radius: 10px;
   font-size: 14px;
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  transition: border-color 0.2s ease;
+}
+
+.auth-form input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  background-color: var(--bg-tertiary);
 }
 
 .auth-submit {
   width: 100%;
   padding: 14px 16px;
-  background-color: #000;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
   color: #fff;
   border: none;
   border-radius: 10px;
   font-size: 16px;
   font-weight: 700;
   cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow);
 }
 
 .auth-submit:hover {
-  background-color: #222;
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
 }
 
 .auth-footer {
   margin-top: 20px;
   font-size: 14px;
-  color: #666;
+  color: var(--text-secondary);
 }
 
 .auth-footer a {
-  color: #000;
-  font-weight: 600;
+  color: var(--color-primary);
+  font-weight: 700;
   text-decoration: none;
 }
 
 .auth-error {
   margin-bottom: 16px;
   padding: 14px 16px;
-  border: 1px solid #e53935;
-  color: #b71c1c;
+  border: 1px solid var(--color-error);
+  color: var(--color-error);
   border-radius: 10px;
-  background: #ffebee;
+  background: rgba(239, 68, 68, 0.1);
 }

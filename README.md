@@ -3,4 +3,9 @@ Ce repo est dédié au projet fil rouge réalisé à Ynov sur la période de fev
 
 # How to launch
 - npm install
+- npm run build
 - npm run dev
+
+# How to connect to admin
+- Email: admin@ymmo.fr
+- Mot de passe: Admin1234

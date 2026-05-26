@@ -2,11 +2,20 @@ export type StoredUser = {
   email: string
   password: string
   name: string
+  role: 'user' | 'admin'
 }
 
 export type AuthUser = {
   email: string
   name: string
+  role: 'user' | 'admin'
+}
+
+const DEFAULT_ADMIN: StoredUser = {
+  email: 'admin@ymmo.fr',
+  password: 'Admin1234',
+  name: 'Administrateur',
+  role: 'admin'
 }
 
 const USERS_STORAGE_KEY = 'ymmo_users'
@@ -22,7 +31,14 @@ function parseJson<T>(value: string | null, defaultValue: T): T {
 }
 
 export function getStoredUsers(): StoredUser[] {
-  return parseJson<StoredUser[]>(window.localStorage.getItem(USERS_STORAGE_KEY), [])
+  const users = parseJson<StoredUser[]>(window.localStorage.getItem(USERS_STORAGE_KEY), [])
+  const hasAdmin = users.some((user) => user.email.toLowerCase() === DEFAULT_ADMIN.email)
+  if (!hasAdmin) {
+    const updated = [...users, DEFAULT_ADMIN]
+    saveStoredUsers(updated)
+    return updated
+  }
+  return users.map((user) => ({ ...user, role: user.role ?? 'user' }))
 }
 
 export function saveStoredUsers(users: StoredUser[]) {
@@ -64,11 +80,12 @@ export function registerUser(email: string, name: string, password: string): Aut
     email: normalizedEmail,
     name: name.trim(),
     password,
+    role: 'user',
   }
 
   users.push(newUser)
   saveStoredUsers(users)
-  const authUser: AuthUser = { email: newUser.email, name: newUser.name }
+  const authUser: AuthUser = { email: newUser.email, name: newUser.name, role: newUser.role }
   saveCurrentUser(authUser)
 
   return {
@@ -90,7 +107,7 @@ export function loginUser(email: string, password: string): AuthResult {
     return { success: false, message: 'E-mail ou mot de passe invalide.' }
   }
 
-  const authUser: AuthUser = { email: user.email, name: user.name }
+  const authUser: AuthUser = { email: user.email, name: user.name, role: user.role ?? 'user' }
   saveCurrentUser(authUser)
 
   return {

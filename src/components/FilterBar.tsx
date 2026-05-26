@@ -4,7 +4,7 @@ import './FilterBar.css'
 
 interface FilterBarProps {
   onFilterChange: (filters: Filter) => void
-  purpose: 'rent' | 'sale'
+  purpose?: 'rent' | 'sale'
 }
 
 const AMENITIES = [
@@ -40,6 +40,7 @@ export default function FilterBar({ onFilterChange, purpose }: FilterBarProps) {
     city: '',
     amenities: []
   })
+  const [expandedAdvanced, setExpandedAdvanced] = useState(false)
 
   const handleFilterChange = (newFilters: Partial<Filter>) => {
     const updated = { ...filters, ...newFilters }
@@ -63,6 +64,7 @@ export default function FilterBar({ onFilterChange, purpose }: FilterBarProps) {
 
   return (
     <div className="filter-bar">
+      {/* Main Filters */}
       <div className="filter-section">
         <h3>Type de bien</h3>
         <div className="filter-group">
@@ -98,51 +100,66 @@ export default function FilterBar({ onFilterChange, purpose }: FilterBarProps) {
         </div>
       </div>
 
-      <div className="filter-section">
-        <h3>🛏️ Pièces</h3>
-        <input
-          type="number"
-            min="0"
-            placeholder="Min pièces"
-            value={filters.roomsMin || ''}
-            onChange={(e) => handleFilterChange({ roomsMin: e.target.value ? Number(e.target.value) : undefined })}
-          />
-      </div>
+      {/* Advanced Filters */}
+      <div className="advanced-filters-wrapper">
+        <button
+          className={`btn-advanced ${expandedAdvanced ? 'expanded' : ''}`}
+          onClick={() => setExpandedAdvanced(!expandedAdvanced)}
+        >
+          <span>Filtres avancés</span>
+          <span className="chevron">{expandedAdvanced ? '▼' : '▶'}</span>
+        </button>
 
-      <div className="filter-section">
-        <h3>Surface (m²)</h3>
-        <input
-          type="number"
-          min="0"
-          placeholder="Min m²"
-          value={filters.surfaceMin || ''}
-          onChange={(e) => handleFilterChange({ surfaceMin: e.target.value ? Number(e.target.value) : undefined })}
-        />
-      </div>
+        {expandedAdvanced && (
+          <div className="advanced-filters">
+            <div className="filter-section">
+              <h3>🛏️ Pièces</h3>
+              <input
+                type="number"
+                min="0"
+                placeholder="Min pièces"
+                value={filters.roomsMin || ''}
+                onChange={(e) => handleFilterChange({ roomsMin: e.target.value ? Number(e.target.value) : undefined })}
+              />
+            </div>
 
-      <div className="filter-section">
-        <h3>Ville</h3>
-        <input
-          type="text"
-          placeholder="Ex: Paris"
-          value={filters.city || ''}
-          onChange={(e) => handleFilterChange({ city: e.target.value })}
-        />
-      </div>
+            <div className="filter-section">
+              <h3>Surface (m²)</h3>
+              <input
+                type="number"
+                min="0"
+                placeholder="Min m²"
+                value={filters.surfaceMin || ''}
+                onChange={(e) => handleFilterChange({ surfaceMin: e.target.value ? Number(e.target.value) : undefined })}
+              />
+            </div>
 
-      <div className="filter-section">
-        <h3>Amenités</h3>
-        <div className="amenities-grid">
-          {AMENITIES.map(amenity => (
-            <button
-              key={amenity}
-              className={`amenity-tag ${filters.amenities?.includes(amenity) ? 'active' : ''}`}
-              onClick={() => toggleAmenity(amenity)}
-            >
-              {amenity}
-            </button>
-          ))}
-        </div>
+            <div className="filter-section">
+              <h3>Ville</h3>
+              <input
+                type="text"
+                placeholder="Ex: Paris"
+                value={filters.city || ''}
+                onChange={(e) => handleFilterChange({ city: e.target.value })}
+              />
+            </div>
+
+            <div className="filter-section">
+              <h3>Amenités</h3>
+              <div className="amenities-grid">
+                {AMENITIES.map(amenity => (
+                  <button
+                    key={amenity}
+                    className={`amenity-tag ${filters.amenities?.includes(amenity) ? 'active' : ''}`}
+                    onClick={() => toggleAmenity(amenity)}
+                  >
+                    {amenity}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   )

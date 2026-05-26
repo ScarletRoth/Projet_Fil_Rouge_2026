@@ -1,20 +1,34 @@
 import { useState } from 'react'
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet'
 import FilterBar from '../components/FilterBar'
-import { Filter } from '../types/Property'
+import PropertyDetailsModal from '../components/PropertyDetailsModal'
+import { Filter, Property } from '../types/Property'
 import { useBanProperties } from '../hooks/useBanProperties'
 import './MapPage.css'
 
-interface MapPageProps {
-  purpose: 'rent' | 'sale'
-}
+export default function MapPage() {
+  const [purposeFilter, setPurposeFilter] = useState<'all' | 'rent' | 'sale'>('all')
+  const [filters, setFilters] = useState<Filter>({})
+  const [selectedProperty, setSelectedProperty] = useState<Property | null>(null)
 
-export default function MapPage({ purpose }: MapPageProps) {
-  const [filters, setFilters] = useState<Filter>({ purpose })
+  const { properties: filteredProperties, loading, error, loadMore, hasMore } = useBanProperties(
+    filters,
+    purposeFilter === 'all' ? undefined : purposeFilter
+  )
 
-  const { properties: filteredProperties, loading, error, loadMore, hasMore } = useBanProperties(filters, purpose)
+  const pageTitle = purposeFilter === 'rent'
+    ? 'Carte - À Louer'
+    : purposeFilter === 'sale'
+      ? 'Carte - À Vendre'
+      : 'Carte'
 
-  const pageTitle = purpose === 'rent' ? 'Carte - À Louer' : 'Carte - À Vendre'
+  const handleSelectProperty = (property: Property) => {
+    setSelectedProperty(property)
+  }
+
+  const closeModal = () => {
+    setSelectedProperty(null)
+  }
 
   // Calculer le centre de la carte (moyenne des positions)
   const center: [number, number] = filteredProperties.length > 0
@@ -29,11 +43,34 @@ export default function MapPage({ purpose }: MapPageProps) {
       <div className="map-header">
         <h1>{pageTitle}</h1>
         <p>{filteredProperties.length} propriété{filteredProperties.length !== 1 ? 's' : ''} affichée{filteredProperties.length !== 1 ? 's' : ''}</p>
+        <div className="map-purpose-tabs">
+          <button
+            className={`tab-btn ${purposeFilter === 'all' ? 'active' : ''}`}
+            type="button"
+            onClick={() => setPurposeFilter('all')}
+          >
+            Tous
+          </button>
+          <button
+            className={`tab-btn ${purposeFilter === 'rent' ? 'active' : ''}`}
+            type="button"
+            onClick={() => setPurposeFilter('rent')}
+          >
+            Location
+          </button>
+          <button
+            className={`tab-btn ${purposeFilter === 'sale' ? 'active' : ''}`}
+            type="button"
+            onClick={() => setPurposeFilter('sale')}
+          >
+            Vente
+          </button>
+        </div>
       </div>
 
       <div className="map-container">
         <aside className="map-sidebar">
-          <FilterBar onFilterChange={setFilters} purpose={purpose} />
+          <FilterBar onFilterChange={setFilters} />
         </aside>
 
         <main className="map-main">
@@ -62,7 +99,13 @@ export default function MapPage({ purpose }: MapPageProps) {
                         <p><strong>{property.price.toLocaleString()} {property.purpose === 'rent' ? '€/mois' : '€'}</strong></p>
                         <p>{property.rooms} pièce{property.rooms !== 1 ? 's' : ''} • {property.surface} m²</p>
                         <p>{property.location.address}</p>
-                        <button className="btn-view">Voir détails</button>
+                        <button
+                          type="button"
+                          className="btn-view"
+                          onClick={() => handleSelectProperty(property)}
+                        >
+                          Voir détails
+                        </button>
                       </div>
                     </Popup>
                   </Marker>
@@ -77,6 +120,10 @@ export default function MapPage({ purpose }: MapPageProps) {
                 </div>
               )}
             </>
+          )}
+
+          {selectedProperty && (
+            <PropertyDetailsModal property={selectedProperty} onClose={closeModal} />
           )}
         </main>
       </div>

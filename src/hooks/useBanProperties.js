@@ -1,7 +1,20 @@
 import { useEffect, useMemo, useState } from 'react';
 import { banFeatureToProperty } from '../services/banToProperty';
 import { searchBanAddress } from '../services/banApi';
-const DEFAULT_PROPERTIES = [
+function parseJson(value, defaultValue) {
+    if (!value)
+        return defaultValue;
+    try {
+        return JSON.parse(value);
+    }
+    catch {
+        return defaultValue;
+    }
+}
+function getSavedProperties() {
+    return parseJson(window.localStorage.getItem('ymmo_properties'), DEFAULT_PROPERTIES);
+}
+export const DEFAULT_PROPERTIES = [
     {
         id: '1',
         title: 'Bel appartement 2 pièces',
@@ -20,7 +33,7 @@ const DEFAULT_PROPERTIES = [
             lng: 2.3357
         },
         amenities: ['balcon', 'ascenseur', 'chauffage', 'parking'],
-        images: ['https://via.placeholder.com/300x200?text=Apt+1'],
+        images: ['https://picsum.photos/seed/apartment-1/600/400'],
         agencyId: 'agency-1',
         createdAt: '2024-01-15',
         rating: 4.5,
@@ -44,7 +57,7 @@ const DEFAULT_PROPERTIES = [
             lng: 2.1302
         },
         amenities: ['jardin', 'garage', 'piscine', 'terrasse'],
-        images: ['https://via.placeholder.com/300x200?text=Maison+1'],
+        images: ['https://picsum.photos/seed/house-2/600/400'],
         agencyId: 'agency-1',
         createdAt: '2024-01-10',
         rating: 5,
@@ -68,7 +81,7 @@ const DEFAULT_PROPERTIES = [
             lng: 2.3718
         },
         amenities: ['wifi', 'meublé', 'cuisine équipée'],
-        images: ['https://via.placeholder.com/300x200?text=Studio+1'],
+        images: ['https://picsum.photos/seed/studio-3/600/400'],
         agencyId: 'agency-2',
         createdAt: '2024-01-12',
         rating: 4,
@@ -92,7 +105,7 @@ const DEFAULT_PROPERTIES = [
             lng: 2.2658
         },
         amenities: ['ascenseur', 'concierge', 'terrasse', 'climatisation', 'parking privé'],
-        images: ['https://via.placeholder.com/300x200?text=Penthouse+1'],
+        images: ['https://picsum.photos/seed/apartment-4/600/400'],
         agencyId: 'agency-1',
         createdAt: '2024-01-08',
         rating: 4.8,
@@ -116,7 +129,7 @@ const DEFAULT_PROPERTIES = [
             lng: 1.8703
         },
         amenities: ['zone constructible', 'accès route'],
-        images: ['https://via.placeholder.com/300x200?text=Terrain+1'],
+        images: ['https://picsum.photos/seed/land-5/600/400'],
         agencyId: 'agency-3',
         createdAt: '2024-01-05',
         rating: 4.2,
@@ -140,7 +153,7 @@ const DEFAULT_PROPERTIES = [
             lng: 2.2399
         },
         amenities: ['terrasse', 'parking', 'cave', 'lumineux'],
-        images: ['https://via.placeholder.com/300x200?text=Loft+1'],
+        images: ['https://picsum.photos/seed/apartment-6/600/400'],
         agencyId: 'agency-2',
         createdAt: '2024-02-18',
         rating: 4.7,
@@ -164,7 +177,7 @@ const DEFAULT_PROPERTIES = [
             lng: 2.0948
         },
         amenities: ['piscine', 'jardin', 'garage', 'alarme'],
-        images: ['https://via.placeholder.com/300x200?text=Villa+1'],
+        images: ['https://picsum.photos/seed/house-7/600/400'],
         agencyId: 'agency-1',
         createdAt: '2024-03-01',
         rating: 4.9,
@@ -188,7 +201,7 @@ const DEFAULT_PROPERTIES = [
             lng: 4.8357
         },
         amenities: ['wifi', 'balcon', 'meublé'],
-        images: ['https://via.placeholder.com/300x200?text=T2+Lyon'],
+        images: ['https://picsum.photos/seed/apartment-8/600/400'],
         agencyId: 'agency-4',
         createdAt: '2024-02-12',
         rating: 4.3,
@@ -212,14 +225,254 @@ const DEFAULT_PROPERTIES = [
             lng: 1.4887
         },
         amenities: ['zone verte', 'accès eau', 'sol plat'],
-        images: ['https://via.placeholder.com/300x200?text=Terrain+2'],
+        images: ['https://picsum.photos/seed/land-9/600/400'],
         agencyId: 'agency-3',
         createdAt: '2024-03-05',
         rating: 4.4,
         reviews: 9
+    },
+    {
+        id: '10',
+        title: 'Loft Industriel Marais',
+        description: "Ancien atelier d'artiste rénové avec verrière et HSP",
+        type: 'apartment',
+        price: 1450000,
+        purpose: 'sale',
+        rooms: 4,
+        bathrooms: 2,
+        surface: 110,
+        location: {
+            city: 'Paris',
+            zipCode: '75004',
+            address: 'Rue des Francs-Bourgeois',
+            lat: 48.8584,
+            lng: 2.3591
+        },
+        amenities: ['ascenseur', 'domotique', 'parquet'],
+        images: ['https://picsum.photos/seed/paris-10/600/400'],
+        agencyId: 'agency-1',
+        createdAt: '2024-04-10',
+        rating: 4.8,
+        reviews: 12
+    },
+    {
+        id: '11',
+        title: 'Studio Vue Tour Eiffel',
+        description: 'Studio optimisé avec balcon filant au 7ème étage',
+        type: 'apartment',
+        price: 420000,
+        purpose: 'sale',
+        rooms: 1,
+        bathrooms: 1,
+        surface: 22,
+        location: {
+            city: 'Paris',
+            zipCode: '75015',
+            address: 'Avenue de Suffren',
+            lat: 48.8530,
+            lng: 2.2980
+        },
+        amenities: ['balcon', 'gardien', 'vue dégagée'],
+        images: ['https://picsum.photos/seed/paris-11/600/400'],
+        agencyId: 'agency-1',
+        createdAt: '2024-05-02',
+        rating: 4.2,
+        reviews: 5
+    },
+    {
+        id: '12',
+        title: 'Villa Contemporaine Corniche',
+        description: 'Villa avec piscine à débordement et vue panoramique mer',
+        type: 'house',
+        price: 2100000,
+        purpose: 'sale',
+        rooms: 6,
+        bathrooms: 3,
+        surface: 250,
+        location: {
+            city: 'Marseille',
+            zipCode: '13007',
+            address: "Chemin du Vallon de l'Oriol",
+            lat: 43.2845,
+            lng: 5.3520
+        },
+        amenities: ['piscine', 'garage', 'terrasse'],
+        images: ['https://picsum.photos/seed/marseille-12/600/400'],
+        agencyId: 'agency-2',
+        createdAt: '2024-03-20',
+        rating: 4.9,
+        reviews: 3
+    },
+    {
+        id: '13',
+        title: 'T3 Vieux-Port',
+        description: 'Appartement de caractère dans immeuble Pouillon',
+        type: 'apartment',
+        price: 385000,
+        purpose: 'sale',
+        rooms: 3,
+        bathrooms: 1,
+        surface: 75,
+        location: {
+            city: 'Marseille',
+            zipCode: '13002',
+            address: 'Quai du Port',
+            lat: 43.2965,
+            lng: 5.3712
+        },
+        amenities: ['climatisation', 'proche métro', 'interphone'],
+        images: ['https://picsum.photos/seed/marseille-13/600/400'],
+        agencyId: 'agency-5',
+        createdAt: '2024-04-15',
+        rating: 4.5,
+        reviews: 15
+    },
+    {
+        id: '14',
+        title: "Appartement Haussmannien Presqu'île",
+        description: 'Prestations anciennes conservées : cheminées, moulures',
+        type: 'apartment',
+        price: 890000,
+        purpose: 'sale',
+        rooms: 5,
+        bathrooms: 2,
+        surface: 135,
+        location: {
+            city: 'Lyon',
+            zipCode: '69002',
+            address: 'Rue Victor Hugo',
+            lat: 45.7538,
+            lng: 4.8315
+        },
+        amenities: ['cave', 'grenier', 'double vitrage'],
+        images: ['https://picsum.photos/seed/lyon-14/600/400'],
+        agencyId: 'agency-8',
+        createdAt: '2024-02-28',
+        rating: 4.7,
+        reviews: 8
+    },
+    {
+        id: '15',
+        title: 'Terrain Constructible Écully',
+        description: 'Terrain viabilisé en zone résidentielle calme',
+        type: 'land',
+        price: 450000,
+        purpose: 'sale',
+        rooms: 0,
+        bathrooms: 0,
+        surface: 800,
+        location: {
+            city: 'Écully',
+            zipCode: '69130',
+            address: 'Chemin de la Forêt',
+            lat: 45.7745,
+            lng: 4.7801
+        },
+        amenities: ['viabilisé', 'piscinable', 'clôturé'],
+        images: ['https://picsum.photos/seed/lyon-15/600/400'],
+        agencyId: 'agency-8',
+        createdAt: '2024-05-05',
+        rating: 4.3,
+        reviews: 2
+    },
+    {
+        id: '16',
+        title: 'Échoppe Bordelaise Rénovée',
+        description: 'Maison de plain-pied avec jardin intime sans vis-à-vis',
+        type: 'house',
+        price: 545000,
+        purpose: 'sale',
+        rooms: 4,
+        bathrooms: 1,
+        surface: 95,
+        location: {
+            city: 'Bordeaux',
+            zipCode: '33000',
+            address: 'Rue de Bègles',
+            lat: 44.8250,
+            lng: -0.5630
+        },
+        amenities: ['jardin', 'puit de jour', 'cuisine équipée'],
+        images: ['https://picsum.photos/seed/bordeaux-16/600/400'],
+        agencyId: 'agency-12',
+        createdAt: '2024-04-22',
+        rating: 4.6,
+        reviews: 11
+    },
+    {
+        id: '17',
+        title: 'Duplex Chartrons',
+        description: 'Dernier étage avec terrasse dans un ancien chai',
+        type: 'apartment',
+        price: 620000,
+        purpose: 'sale',
+        rooms: 3,
+        bathrooms: 2,
+        surface: 88,
+        location: {
+            city: 'Bordeaux',
+            zipCode: '33300',
+            address: 'Cours de la Martinique',
+            lat: 44.8510,
+            lng: -0.5720
+        },
+        amenities: ['terrasse', 'parking', 'climatisation'],
+        images: ['https://picsum.photos/seed/bordeaux-17/600/400'],
+        agencyId: 'agency-12',
+        createdAt: '2024-05-01',
+        rating: 4.8,
+        reviews: 7
+    },
+    {
+        id: '18',
+        title: 'Maison de Ville Vieux-Lille',
+        description: 'Maison en briques avec cour intérieure et cachet',
+        type: 'house',
+        price: 495000,
+        purpose: 'sale',
+        rooms: 5,
+        bathrooms: 2,
+        surface: 120,
+        location: {
+            city: 'Lille',
+            zipCode: '59800',
+            address: 'Rue de la Monnaie',
+            lat: 50.6405,
+            lng: 3.0620
+        },
+        amenities: ['cour', 'cheminée', 'proche commerces'],
+        images: ['https://picsum.photos/seed/lille-18/600/400'],
+        agencyId: 'agency-4',
+        createdAt: '2024-03-15',
+        rating: 4.4,
+        reviews: 14
+    },
+    {
+        id: '19',
+        title: 'Appartement Etudiant Vauban',
+        description: 'Investissement locatif idéal à deux pas des facultés',
+        type: 'apartment',
+        price: 135000,
+        purpose: 'sale',
+        rooms: 1,
+        bathrooms: 1,
+        surface: 28,
+        location: {
+            city: 'Lille',
+            zipCode: '59000',
+            address: 'Boulevard Vauban',
+            lat: 50.6320,
+            lng: 3.0450
+        },
+        amenities: ['meublé', 'wifi inclus', 'local vélo'],
+        images: ['https://picsum.photos/seed/lille-19/600/400'],
+        agencyId: 'agency-4',
+        createdAt: '2024-05-08',
+        rating: 4.0,
+        reviews: 4
     }
 ];
-export function useBanProperties(filters, purpose, initialProperties = DEFAULT_PROPERTIES) {
+export function useBanProperties(filters, purpose, initialProperties = getSavedProperties()) {
     const [properties, setProperties] = useState(initialProperties);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(undefined);
@@ -227,7 +480,6 @@ export function useBanProperties(filters, purpose, initialProperties = DEFAULT_P
     const [hasMore, setHasMore] = useState(false);
     const shouldUseBan = Boolean(filters.city && filters.city.trim() !== '');
     useEffect(() => {
-        // Reset search state when query changes
         setPage(1);
         setHasMore(false);
         if (!shouldUseBan) {
@@ -238,12 +490,13 @@ export function useBanProperties(filters, purpose, initialProperties = DEFAULT_P
         }
         const controller = new AbortController();
         const query = filters.city ?? '';
+        const searchPurpose = purpose ?? 'rent';
         const timeoutId = window.setTimeout(async () => {
             setLoading(true);
             setError(undefined);
             try {
                 const features = await searchBanAddress(query, 20, 1, controller.signal);
-                const banProperties = features.map(f => banFeatureToProperty(f, purpose));
+                const banProperties = features.map(f => banFeatureToProperty(f, searchPurpose));
                 setProperties(banProperties);
                 setHasMore(features.length === 20);
             }
@@ -263,7 +516,7 @@ export function useBanProperties(filters, purpose, initialProperties = DEFAULT_P
     }, [filters.city, purpose, initialProperties, shouldUseBan]);
     const filteredProperties = useMemo(() => {
         return properties.filter((property) => {
-            if (property.purpose !== purpose)
+            if (purpose && property.purpose !== purpose)
                 return false;
             if (filters.type && filters.type.length > 0 && !filters.type.includes(property.type))
                 return false;
@@ -300,7 +553,6 @@ export function useBanProperties(filters, purpose, initialProperties = DEFAULT_P
                 const merged = [...prev, ...banProperties];
                 const uniqueById = Array.from(new Map(merged.map(p => [p.id, p])).values());
                 const added = uniqueById.length - prev.length;
-                // Si on ne reçoit aucun nouvel ID, on considère qu'il n'y a plus de pages.
                 setHasMore(added > 0 && features.length === 20);
                 return uniqueById;
             });

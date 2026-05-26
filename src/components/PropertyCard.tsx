@@ -4,9 +4,10 @@ import './PropertyCard.css'
 interface PropertyCardProps {
   property: Property
   onSelect?: (property: Property) => void
+  onDelete?: () => void
 }
 
-export default function PropertyCard({ property, onSelect }: PropertyCardProps) {
+export default function PropertyCard({ property, onSelect, onDelete }: PropertyCardProps) {
   const priceLabel = property.purpose === 'rent' ? '€/mois' : '€'
   const typeLabel = {
     apartment: 'Appartement',
@@ -66,10 +67,33 @@ export default function PropertyCard({ property, onSelect }: PropertyCardProps) 
         {/* Price */}
         <div className="property-footer">
           <div className="price">
-            <span className="amount">{property.price.toLocaleString()}</span>
-            <span className="currency">{priceLabel}</span>
+            <span className="amount">{property.price.toLocaleString('fr-FR')}</span>
+            <span className="currency">{priceLabel} TTC</span>
           </div>
-          <button className="btn-details">Voir détails</button>
+          <div className="property-actions">
+            {onDelete && (
+              <button
+                type="button"
+                className="btn-delete"
+                onClick={(event) => {
+                  event.stopPropagation()
+                  onDelete()
+                }}
+              >
+                Supprimer
+              </button>
+            )}
+            <button
+              type="button"
+              className="btn-details"
+              onClick={(event) => {
+                event.stopPropagation()
+                onSelect?.(property)
+              }}
+            >
+              Voir détails
+            </button>
+          </div>
         </div>
       </div>
     </div>

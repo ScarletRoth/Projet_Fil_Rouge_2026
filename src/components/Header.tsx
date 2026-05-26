@@ -1,9 +1,11 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
+import { useTheme } from '../contexts/ThemeContext'
 import './Header.css'
 
 export default function Header() {
   const { currentUser, logout } = useAuth()
+  const { theme, toggleTheme } = useTheme()
   const navigate = useNavigate()
 
   const handleLogout = () => {
@@ -23,10 +25,20 @@ export default function Header() {
           <Link to="/" className="nav-link">Accueil</Link>
           <Link to="/sale" className="nav-link">À Vendre</Link>
           <Link to="/rent" className="nav-link">À Louer</Link>
-          <a href="#contact" className="nav-link">Contact</a>
+          <Link to="/map" className="nav-link">Carte</Link>
+          <Link to="/contact" className="nav-link">Contact</Link>
         </nav>
 
         <div className="auth-buttons">
+          <button
+            className="btn-theme"
+            onClick={toggleTheme}
+            title={`Passer en mode ${theme === 'light' ? 'sombre' : 'clair'}`}
+            aria-label="Toggle theme"
+          >
+            {theme === 'light' ? '🌙' : '☀️'}
+          </button>
+          
           {currentUser ? (
             <>
               <span className="user-label">Bonjour, {currentUser.name}</span>
